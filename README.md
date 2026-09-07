@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tobams Group Website
 
-## Getting Started
+A single-page marketing site for Tobams Group, rebuilt from the [Figma design](https://www.figma.com/file/wuqCLKk1feTgB6xxSRRwZu). The whole point was to get as close to the design as possible: the type sizes, line heights, colors, spacing, and hover behavior all come from the source file rather than being approximated by eye.
 
-First, run the development server:
+The page is made up of self-contained sections, each in its own component:
+
+- Header with dropdowns and a mobile menu
+- Hero
+- Learning Management System (TG Academy)
+- Corporate trainings, individual training, and capacity development
+- Management Development Program
+- Transformation Hub webinar (Learning With Our CEO)
+- Training the Consultant
+- CTA
+- Testimonials
+- Footer
+
+## Stack
+
+- [Next.js](https://nextjs.org) (App Router) with TypeScript
+- [Tailwind CSS](https://tailwindcss.com) v4 for styling
+- Nunito and Nunito Sans loaded with `next/font`, so the fonts match the design and there's no layout shift while they load
+
+## Running it
+
+Requires a recent LTS version of Node.js (18.18 or newer).
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Useful scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command        | What it does                       |
+| -------------- | ---------------------------------- |
+| `npm run dev`  | Start the dev server              |
+| `npm run build`| Create a production build         |
+| `npm run lint` | Run ESLint                        |
 
-## Learn More
+## How it was built
 
-To learn more about Next.js, take a look at the following resources:
+A few notes on the approach, because the details matter:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- The design data was pulled directly from the Figma file through the Figma REST API. That gave exact font sizes, weights, line heights, letter spacing, colors, and frame dimensions, which were then mapped onto Tailwind utilities. Most of the arbitrary-looking values in the classNames come straight from that data.
+- Colors are limited and consistent (the brand purple `#571244`, accent red `#ef4353`, and a few neutrals), defined once as theme tokens so the palette can't drift.
+- A few parts of the Figma file were messy — duplicate text layers, overlapping frames, stale variants. Where the raw file was ambiguous, I went with what actually renders correctly on the page rather than blindly copying the node data.
+- The layout is responsive at mobile and desktop; several sections have their own distinct treatment at each breakpoint.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+public/images       Design assets used by the sections
+src/app             Next.js App Router entry point (layout, page, global styles)
+src/components      One component per section + a shared icons file
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site is a fully static Next.js build, so it deploys cleanly to Vercel or Netlify. Push the repo and connect it, or run `npm run build` and host the output anywhere static files are served.
+
+## AI usage disclosure
+
+To be upfront about it: AI tooling was used to build this. I used Claude, working through an opencode coding agent, to write and iterate on the React components, translate the Figma export into Tailwind classes, and catch small fidelity gaps against the design (things like a wrong line height or a missing gap). The work was reviewed before landing, and the repository passes `tsc`, ESLint, and a production build. The Figma access token used during development was kept out of version control.

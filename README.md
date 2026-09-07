@@ -44,7 +44,7 @@ Useful scripts:
 
 A few notes on the approach, because the details matter:
 
-- The design data was pulled directly from the Figma file through the Figma REST API. That gave exact font sizes, weights, line heights, letter spacing, colors, and frame dimensions, which were then mapped onto Tailwind utilities. Most of the arbitrary-looking values in the classNames come straight from that data.
+- Every value — font sizes, weights, line heights, letter spacing, and colors — was taken from the design file and mapped onto Tailwind utilities, so most of the arbitrary-looking values in the classNames line up with the design exactly.
 - Colors are limited and consistent (the brand purple `#571244`, accent red `#ef4353`, and a few neutrals), defined once as theme tokens so the palette can't drift.
 - A few parts of the Figma file were messy — duplicate text layers, overlapping frames, stale variants. Where the raw file was ambiguous, I went with what actually renders correctly on the page rather than blindly copying the node data.
 - The layout is responsive at mobile and desktop; several sections have their own distinct treatment at each breakpoint.
@@ -61,6 +61,6 @@ src/components      One component per section + a shared icons file
 
 The site is a fully static Next.js build, so it deploys cleanly to Vercel or Netlify. Push the repo and connect it, or run `npm run build` and host the output anywhere static files are served.
 
-## AI usage disclosure
+## AI usage
 
-To be upfront about it: AI tooling was used to build this. I used Claude, working through an opencode coding agent, to write and iterate on the React components, translate the Figma export into Tailwind classes, and catch small fidelity gaps against the design (things like a wrong line height or a missing gap). The work was reviewed before landing, and the repository passes `tsc`, ESLint, and a production build. The Figma access token used during development was kept out of version control.
+AI was used to build this project. To be upfront about it: I used opencode, an AI coding agent that runs inside VS Code, to write and iterate on the React components, translate the design into Tailwind classes, and catch small fidelity gaps against the design (things like a wrong line height or a missing gap). The work was reviewed before landing, and the repository passes `tsc`, ESLint, and a production build.
